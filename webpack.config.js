@@ -1,8 +1,14 @@
 const path = require('path');
+const CopyPlugin = require('copy-webpack-plugin');
+const HtmlPlugin = require('html-webpack-plugin');
 
 module.exports = {
   mode: 'development',
-  entry: './client/src/test.tsx',
+  devtool: 'cheap-module-source-map',
+  entry: {
+    popup: path.resolve('./client/src/popup/popup.tsx'),
+    options: path.resolve('./client/src/options/options.tsx'),
+  },
   module: {
     rules: [
       {
@@ -10,13 +16,48 @@ module.exports = {
         test: /\.tsx?$/,
         exclude: /node_modules/,
       },
+      {
+        use: ['style-loader', 'css-loader'],
+        test: /\.css?$/i,
+      },
+      {
+        type: 'asset/resource',
+        test: /\.(jpg|jpeg|png|woff|woff2|eot|ttf|svg)$/,
+      },
     ],
   },
+  plugins: [
+    new CopyPlugin({
+      patterns: [
+        {
+          from: path.resolve('./client/src/static'),
+          to: path.resolve('./client/dist'),
+        },
+      ],
+    }),
+    ...getHtmlPlugins(['popup', 'options']),
+  ],
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
   },
   output: {
-    filename: 'bundle.js',
+    filename: '[name].js',
     path: path.resolve(__dirname, './client/dist'),
   },
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+    },
+  },
 };
+
+function getHtmlPlugins(chunks) {
+  return chunks.map(
+    (chunk) =>
+      new HtmlPlugin({
+        title: 'Healthy Reminder Extension',
+        filename: `${chunk}.html`,
+        chunks: [chunk],
+      })
+  );
+}
