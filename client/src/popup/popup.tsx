@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Reminder from './reminder';
+import Header from './Header';
+import ListHeader from './ListHeader';
+import List from './List';
 import './popup.css';
 
 const image = <img src='icon.png' />;
@@ -8,8 +10,9 @@ const image = <img src='icon.png' />;
 const App: React.FC<{}> = () => {
   return (
     <div>
-      <h1>Hello from React</h1>
-      <Reminder />
+      <Header />
+      <ListHeader />
+      <List />
     </div>
   );
 };
