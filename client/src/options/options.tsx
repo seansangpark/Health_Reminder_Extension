@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import './options.css';
 
@@ -6,7 +6,7 @@ const App: React.FC<{}> = () => {
   return (
     <div>
       <img src='icon.png' />
-      <h1>Option's page</h1>
+      <h1>Healthy Reminder</h1>
     </div>
   );
 };
