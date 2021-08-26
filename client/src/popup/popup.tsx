@@ -16,20 +16,20 @@ import './popup.css';
 //   reminders: { [key: string]: Reminder };
 // };
 
-const App: React.FC<{}> = () => {
+const App: React.FC<any> = () => {
   const [reminders, setReminders] = useState([{ reminder: '' }]);
 
-  const addReminder = (reminder) => {
+  const addReminder = (reminder: string) => {
     setReminders([...reminders, { reminder }]);
-    console.log(reminders);
   };
 
   return (
     <div>
       <Header />
       <ListHeader />
-      <List />
-      <ReminderInput />
+      <List reminders={reminders} />
+      <ReminderInput addReminder={addReminder} />
+      <button>Notify Me!</button>
     </div>
   );
 };

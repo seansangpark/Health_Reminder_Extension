@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import './popup.css';
 
-const ReminderInput: React.FC<{}> = () => {
+const ReminderInput: React.FC<any> = (props) => {
   const [reminder, setReminder] = useState('');
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(reminder);
+    props.addReminder(reminder);
   };
 
   return (
